@@ -43,20 +43,21 @@ public class RonQI2Silver extends RonQI2 {
      */
     @Override
     public boolean evaluarApneaSuenyo() {
-        if (lecturasP.isEmpty() || lecturasS.isEmpty()) {
-            return false; // CORREGIDO: proteger de listas vacías
-        }
-
-        double avgP = lecturasP.stream()
-                .mapToDouble(d -> d)
-                .average()
-                .orElse(0.0);
-        double avgS = lecturasS.stream()
-                .mapToDouble(d -> d)
-                .average()
-                .orElse(0.0);
-
-        // CORREGIDO: lógica inversa
-        return avgP >= thresholdP && avgS > thresholdS;
+    if (lecturasP.isEmpty() || lecturasS.isEmpty()) {
+            return false; // protección si no hay lecturas
     }
+    
+        double avgP = lecturasP.stream()
+            .mapToDouble(d -> d)
+            .average()
+            .orElse(0.0);
+        double avgS = lecturasS.stream()
+            .mapToDouble(d -> d)
+            .average()
+            .orElse(0.0);
+    
+        // CORREGIDO: la apnea ocurre cuando los promedios son mayores que los umbrales
+        return avgP >= thresholdP && avgS >= thresholdS;
+    }
+    
 }

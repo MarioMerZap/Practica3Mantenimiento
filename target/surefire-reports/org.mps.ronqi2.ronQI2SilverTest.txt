@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.mps.ronqi2.ronQI2SilverTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.480 s -- in org.mps.ronqi2.ronQI2SilverTest

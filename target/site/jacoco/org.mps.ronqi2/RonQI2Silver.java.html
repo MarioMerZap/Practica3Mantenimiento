@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RonQI2Silver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">junit5-mps-uma</a> &gt; <a href="index.source.html" class="el_package">org.mps.ronqi2</a> &gt; <span class="el_source">RonQI2Silver.java</span></div><h1>RonQI2Silver.java</h1><pre class="source lang-java linenums">package org.mps.ronqi2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RonQI2Silver extends RonQI2 {
+
+    private int numLecturas;
+    private List&lt;Float&gt; lecturasP;
+    private List&lt;Float&gt; lecturasS;
+    private float thresholdP;
+    private float thresholdS;
+
+<span class="fc" id="L14">    public RonQI2Silver() {</span>
+<span class="fc" id="L15">        lecturasP = new ArrayList&lt;Float&gt;();</span>
+<span class="fc" id="L16">        lecturasS = new ArrayList&lt;Float&gt;();</span>
+<span class="fc" id="L17">        thresholdP = 20.0f;</span>
+<span class="fc" id="L18">        thresholdS = 30.0f;</span>
+<span class="fc" id="L19">        numLecturas = 5;</span>
+<span class="fc" id="L20">    }</span>
+
+    /* 
+     * Obtiene las lecturas de presion y sonido del dispositivo y las almacena en sus respectivos
+     * contenedores.
+     */
+    public void obtenerNuevaLectura() {
+<span class="fc" id="L27">        lecturasP.add(disp.leerSensorPresion());</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (lecturasP.size() &gt; numLecturas) {</span>
+<span class="fc" id="L29">            lecturasP.remove(0);</span>
+        }
+
+<span class="fc" id="L32">        lecturasS.add(disp.leerSensorSonido()); // CORREGIDO: antes leía presión otra vez</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (lecturasS.size() &gt; numLecturas) {</span>
+<span class="fc" id="L34">            lecturasS.remove(0);</span>
+        }
+<span class="fc" id="L36">    }</span>
+
+    /* 
+     * Evalua la apnea del sueño. 
+     * - Devuelve true si el promedio de las lecturas de presión y sonido es mayor a los límites 
+     *   establecidos
+     * - False en otro caso
+     */
+    @Override
+    public boolean evaluarApneaSuenyo() {
+<span class="pc bpc" id="L46" title="1 of 4 branches missed.">    if (lecturasP.isEmpty() || lecturasS.isEmpty()) {</span>
+<span class="fc" id="L47">            return false; // protección si no hay lecturas</span>
+    }
+    
+<span class="fc" id="L50">        double avgP = lecturasP.stream()</span>
+<span class="fc" id="L51">            .mapToDouble(d -&gt; d)</span>
+<span class="fc" id="L52">            .average()</span>
+<span class="fc" id="L53">            .orElse(0.0);</span>
+<span class="fc" id="L54">        double avgS = lecturasS.stream()</span>
+<span class="fc" id="L55">            .mapToDouble(d -&gt; d)</span>
+<span class="fc" id="L56">            .average()</span>
+<span class="fc" id="L57">            .orElse(0.0);</span>
+    
+        // CORREGIDO: la apnea ocurre cuando los promedios son mayores que los umbrales
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        return avgP &gt;= thresholdP &amp;&amp; avgS &gt;= thresholdS;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

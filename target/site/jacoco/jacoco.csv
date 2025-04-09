@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+junit5-mps-uma,org.mps.ronqi2,RonQI2,54,3,14,0,13,1,11,1,4,1
+junit5-mps-uma,org.mps.ronqi2,RonQI2Silver,0,111,1,11,0,25,1,10,0,5
+junit5-mps-uma,org.mps.dispositivo,Dispositivo,3,0,0,0,1,0,1,0,1,0
+junit5-mps-uma,org.mps.dispositivo,DispositivoSilver,25,0,0,0,11,0,8,0,8,0

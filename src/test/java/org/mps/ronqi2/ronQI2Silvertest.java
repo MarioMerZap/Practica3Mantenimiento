@@ -7,7 +7,7 @@ import org.mps.dispositivo.Dispositivo;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ronQI2Silvertest {
+public class ronQI2SilverTest {
 
     private RonQI2Silver ronQi2Silver;
     private Dispositivo mockDispositivo;
@@ -95,19 +95,21 @@ public class ronQI2Silvertest {
 
     @Test
     public void evaluarApneaSuenyo_retornaFalse_siSoloHaySonido() {
-        when(mockDispositivo.leerSensorPresion()).thenReturn(25.0f);
-        when(mockDispositivo.leerSensorSonido()).thenReturn(35.0f);
+    
+    when(mockDispositivo.leerSensorPresion()).thenReturn(24.0f);
+    when(mockDispositivo.leerSensorSonido()).thenReturn(35.0f);
 
-        for (int i = 0; i < 5; i++) {
-            ronQi2Silver.obtenerNuevaLectura();
-        }
 
-        // Eliminamos la lectura de presión llamando a obtenerNuevaLectura para sobrescribirla
-        when(mockDispositivo.leerSensorPresion()).thenReturn(0.0f); // Simulamos un valor de presión bajo
-
-        // Obtenemos una nueva lectura con este valor.
+    for (int i = 0; i < 5; i++) {
         ronQi2Silver.obtenerNuevaLectura();
-
-        assertFalse(ronQi2Silver.evaluarApneaSuenyo());
     }
+
+    when(mockDispositivo.leerSensorPresion()).thenReturn(0.0f);
+    when(mockDispositivo.leerSensorSonido()).thenReturn(35.0f);
+    ronQi2Silver.obtenerNuevaLectura();
+
+    boolean resultado = ronQi2Silver.evaluarApneaSuenyo();
+    assertFalse(resultado, "El promedio de presión (19.2) es < 20.0, por lo que debería ser false");
+}
+
 }

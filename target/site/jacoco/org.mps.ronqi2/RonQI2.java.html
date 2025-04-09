@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RonQI2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">junit5-mps-uma</a> &gt; <a href="index.source.html" class="el_package">org.mps.ronqi2</a> &gt; <span class="el_source">RonQI2.java</span></div><h1>RonQI2.java</h1><pre class="source lang-java linenums">package org.mps.ronqi2;
+
+import org.mps.dispositivo.Dispositivo;
+
+<span class="fc" id="L5">public abstract class RonQI2 {</span>
+    protected Dispositivo disp;
+
+    /* 
+     * Inicializa el sistema ronQI2 configurando los dos sensores del dispositivo conectado.
+    */
+    public boolean inicializar(){
+<span class="nc" id="L12">        boolean result = false;</span>
+<span class="nc bnc" id="L13" title="All 2 branches missed.">        if (disp.conectarSensorPresion()){</span>
+<span class="nc" id="L14">            boolean confPresion = disp.configurarSensorPresion();</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">            if (disp.conectarSensorSonido()){</span>
+<span class="nc bnc" id="L16" title="All 4 branches missed.">                result = disp.configurarSensorSonido() &amp;&amp; confPresion;</span>
+            }
+        }
+<span class="nc" id="L19">        return result;   </span>
+    }
+
+    /* 
+     * Lee y almacena las lecturas de presion y sonido del dispositivo.
+    */
+    public abstract void obtenerNuevaLectura();
+
+    public void anyadirDispositivo(Dispositivo d){
+<span class="nc" id="L28">        disp = d;</span>
+<span class="nc" id="L29">    }</span>
+
+    /* 
+     * Reconecta el dispositivo cuando esta desconectado.
+    */
+    public boolean reconectar(){
+<span class="nc" id="L35">        boolean result = false;</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (!disp.estaConectado()){</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">            result = disp.conectarSensorPresion() &amp;&amp; disp.conectarSensorSonido();</span>
+        }
+<span class="nc" id="L39">        return result;</span>
+    }
+
+    /* 
+     * Evalua la apnea del suenyo con las medidas recogidas.
+    */
+    public abstract boolean evaluarApneaSuenyo();
+    
+    /* 
+     * Lee y almacena las lecturas de presion y sonido del dispositivo.
+    */
+    public boolean estaConectado(){
+<span class="nc" id="L51">        return disp.estaConectado();</span>
+    }    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
